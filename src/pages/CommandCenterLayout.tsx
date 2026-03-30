@@ -49,7 +49,7 @@ export default function CommandCenterLayout() {
 function AuthenticatedApp() {
   const assessment = useAssessment();
   const {
-    scores, setScore, dimAvg, overallAvg, completionPct, gaps, rolloutOrder,
+    scores, setScore, removeAgent, dimAvg, overallAvg, completionPct, gaps, rolloutOrder,
     assessmentId, assessmentName, setAssessmentName,
     assessments, saving,
     saveAssessment, loadAssessment, newAssessment, deleteAssessment, shareAssessment,
@@ -83,7 +83,7 @@ function AuthenticatedApp() {
           <main className="flex-1 overflow-auto p-4 md:p-6">
             <Routes>
               <Route index element={<Overview overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
-              <Route path="agents" element={<AgentDeepDive scores={scores} setScore={setScore} overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
+              <Route path="agents" element={<AgentDeepDive scores={scores} setScore={setScore} removeAgent={removeAgent} overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
               <Route path="gaps" element={<GapRegister gaps={gaps} />} />
               <Route path="rollout" element={<RolloutRemediation scores={scores} overallAvg={overallAvg} rolloutOrder={rolloutOrder} />} />
               <Route path="workshops" element={<WorkshopPlanner />} />

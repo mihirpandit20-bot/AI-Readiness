@@ -49,24 +49,28 @@ export function useAssessment(): AssessmentData {
   }, []);
 
   const setScore = useCallback(
-    (agentId: string, dimension: DimensionKey, score: number) => {
+    (agentId: string, agentName: string, dimension: DimensionKey, score: number) => {
       setScores((prev) => {
         const idx = prev.findIndex(
           (s) => s.agentId === agentId && s.dimension === dimension
         );
         if (idx >= 0) {
           const next = [...prev];
-          next[idx] = { ...next[idx], score };
+          next[idx] = { ...next[idx], score, agentName };
           return next;
         }
         return [
           ...prev,
-          { agentId, agentName: agentId, dimension, score },
+          { agentId, agentName, dimension, score },
         ];
       });
     },
     []
   );
+
+  const removeAgent = useCallback((agentId: string) => {
+    setScores((prev) => prev.filter((s) => s.agentId !== agentId));
+  }, []);
 
   // --- Computed values (unchanged) ---
 
@@ -259,6 +263,7 @@ export function useAssessment(): AssessmentData {
   return {
     scores,
     setScore,
+    removeAgent,
     dimAvg,
     overallAvg,
     completionPct,

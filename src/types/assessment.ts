@@ -53,7 +53,8 @@ export interface AssessmentData {
   assessmentName: string;
   setAssessmentName: (name: string) => void;
   scores: AgentScore[];
-  setScore: (agentId: string, dimension: DimensionKey, score: number) => void;
+  setScore: (agentId: string, agentName: string, dimension: DimensionKey, score: number) => void;
+  removeAgent: (agentId: string) => void;
   dimAvg: Record<DimensionKey, number>;
   overallAvg: number;
   completionPct: number;
