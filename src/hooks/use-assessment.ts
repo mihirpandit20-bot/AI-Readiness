@@ -193,8 +193,10 @@ export function useAssessment(): AssessmentData {
           }))
         );
       }
+      return { success: true };
     } catch (err) {
-      console.error("Failed to save assessment:", err);
+      const message = err instanceof Error ? err.message : "Failed to save assessment";
+      return { success: false, error: message };
     } finally {
       setSaving(false);
     }
@@ -225,8 +227,10 @@ export function useAssessment(): AssessmentData {
           score: row.score,
         }))
       );
+      return { success: true };
     } catch (err) {
-      console.error("Failed to load assessment:", err);
+      const message = err instanceof Error ? err.message : "Failed to load assessment";
+      return { success: false, error: message };
     }
   }, []);
 
@@ -250,8 +254,10 @@ export function useAssessment(): AssessmentData {
       if (id === assessmentId) {
         newAssessment();
       }
+      return { success: true };
     } catch (err) {
-      console.error("Failed to delete assessment:", err);
+      const message = err instanceof Error ? err.message : "Failed to delete assessment";
+      return { success: false, error: message };
     }
   }, [assessmentId, newAssessment]);
 

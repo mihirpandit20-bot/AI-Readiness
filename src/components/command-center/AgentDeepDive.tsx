@@ -8,8 +8,6 @@ interface AgentDeepDiveProps {
   scores: AgentScore[];
   setScore: (agentId: string, agentName: string, dimension: DimensionKey, score: number) => void;
   removeAgent: (agentId: string) => void;
-  overallAvg: number;
-  dimAvg: Record<DimensionKey, number>;
   completionPct: number;
 }
 

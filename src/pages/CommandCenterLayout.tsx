@@ -11,6 +11,8 @@ import { DependencyMap } from "@/components/command-center/DependencyMap";
 import { StrategyConsultant } from "@/pages/StrategyConsultant";
 import { AuthPage } from "@/components/command-center/AuthPage";
 import { AssessmentToolbar } from "@/components/command-center/AssessmentToolbar";
+import { ToastContainer } from "@/components/ui/toast-container";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useAssessment } from "@/hooks/use-assessment";
 import { Routes, Route } from "react-router-dom";
 import type { Session } from "@supabase/supabase-js";
@@ -81,18 +83,21 @@ function AuthenticatedApp() {
             />
           </header>
           <main className="flex-1 overflow-auto p-4 md:p-6">
-            <Routes>
-              <Route index element={<Overview overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
-              <Route path="agents" element={<AgentDeepDive scores={scores} setScore={setScore} removeAgent={removeAgent} overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
-              <Route path="gaps" element={<GapRegister gaps={gaps} />} />
-              <Route path="rollout" element={<RolloutRemediation scores={scores} overallAvg={overallAvg} rolloutOrder={rolloutOrder} />} />
-              <Route path="workshops" element={<WorkshopPlanner />} />
-              <Route path="dependencies" element={<DependencyMap />} />
-              <Route path="strategy-ai" element={<StrategyConsultant scores={scores} gaps={gaps} overallAvg={overallAvg} dimAvg={dimAvg} rolloutOrder={rolloutOrder} />} />
-            </Routes>
+            <ErrorBoundary>
+              <Routes>
+                <Route index element={<Overview overallAvg={overallAvg} dimAvg={dimAvg} completionPct={completionPct} />} />
+                <Route path="agents" element={<AgentDeepDive scores={scores} setScore={setScore} removeAgent={removeAgent} completionPct={completionPct} />} />
+                <Route path="gaps" element={<GapRegister gaps={gaps} />} />
+                <Route path="rollout" element={<RolloutRemediation rolloutOrder={rolloutOrder} />} />
+                <Route path="workshops" element={<WorkshopPlanner gaps={gaps} scores={scores} />} />
+                <Route path="dependencies" element={<DependencyMap scores={scores} />} />
+                <Route path="strategy-ai" element={<StrategyConsultant scores={scores} gaps={gaps} overallAvg={overallAvg} dimAvg={dimAvg} rolloutOrder={rolloutOrder} />} />
+              </Routes>
+            </ErrorBoundary>
           </main>
         </div>
       </div>
+      <ToastContainer />
     </SidebarProvider>
   );
 }

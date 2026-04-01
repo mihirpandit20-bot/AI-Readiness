@@ -62,9 +62,9 @@ export interface AssessmentData {
   rolloutOrder: RolloutItem[];
   assessments: AssessmentSummary[];
   saving: boolean;
-  saveAssessment: () => Promise<void>;
-  loadAssessment: (id: string) => Promise<void>;
+  saveAssessment: () => Promise<{ success: boolean; error?: string }>;
+  loadAssessment: (id: string) => Promise<{ success: boolean; error?: string }>;
   newAssessment: () => void;
-  deleteAssessment: (id: string) => Promise<void>;
+  deleteAssessment: (id: string) => Promise<{ success: boolean; error?: string }>;
   shareAssessment: (id: string) => Promise<string>;
 }

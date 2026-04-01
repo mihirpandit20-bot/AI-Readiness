@@ -1,8 +1,6 @@
-import type { AgentScore, RolloutItem } from "@/types/assessment";
+import type { RolloutItem } from "@/types/assessment";
 
 interface RolloutRemediationProps {
-  scores: AgentScore[];
-  overallAvg: number;
   rolloutOrder: RolloutItem[];
 }
 

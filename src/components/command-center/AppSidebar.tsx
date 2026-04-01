@@ -20,8 +20,11 @@ import {
   GitBranch,
   BrainCircuit,
   LogOut,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useTheme } from "@/hooks/use-theme";
 
 const navItems = [
   { path: "/", label: "Overview", icon: LayoutDashboard },
@@ -35,6 +38,7 @@ const navItems = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const { theme, toggle } = useTheme();
 
   return (
     <Sidebar>
@@ -73,6 +77,15 @@ export function AppSidebar() {
 
       <SidebarFooter>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={toggle}
+              tooltip={theme === "dark" ? "Light Mode" : "Dark Mode"}
+            >
+              {theme === "dark" ? <Sun /> : <Moon />}
+              <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => supabase.auth.signOut()}
