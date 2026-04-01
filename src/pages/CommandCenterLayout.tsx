@@ -17,11 +17,14 @@ import { useAssessment } from "@/hooks/use-assessment";
 import { Routes, Route } from "react-router-dom";
 import type { Session } from "@supabase/supabase-js";
 
+const SKIP_AUTH = true; // Set to false to require Supabase auth
+
 export default function CommandCenterLayout() {
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(SKIP_AUTH ? false : true);
 
   useEffect(() => {
+    if (SKIP_AUTH) return;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setLoading(false);
@@ -41,7 +44,7 @@ export default function CommandCenterLayout() {
     );
   }
 
-  if (!session) {
+  if (!SKIP_AUTH && !session) {
     return <AuthPage />;
   }
 
